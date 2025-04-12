@@ -1,0 +1,35 @@
+Question 1:
+a) Use linear regression to estimate the parameters α, τ, and β. You are permitted to use Python or R.
+linear regression used:
+y = 95.96616888130347 + (1.51487260758259*x) + (-9.105721484009862*w)
+
+b) Report the estimated ATE (ˆ τ) and its statistical significance.
+The estimated ATE is -9.105721484009862.
+The estimated causal effect of participating in the carbon offset program is a decrease of 9.11 points in the stakeholder engagement score, holding sustainability spending constant.
+This effect is statistically significant at the 1% level (p < 0.001), meaning there is strong evidence against the null hypothesis where ATE is 0.
+Standard Error: 2.053
+t-statistic: -4.434
+p-value: 0.000
+
+c) Briefly explain under what assumptions ˆ τ can be given a causal interpretation.
+- Given the observed covariate X (sustainability spending), the treatment assignment W must be as good as random. 
+  That is, all other factors that affect both treatment and the outcome must be captured by X.
+- There must be non-zero probability of receiving treatment or control for all levels of X.
+- No interference between units (e.g., one firm's treatment doesn’t affect another’s outcome).
+- The linear form Y = α + τW + βX + ε must correctly model the true relationship. Omitted variable bias, non-linearity, or measurement error in X could violate this.
+
+Question 2:
+c) For the inputs of w=1 and x=20, the predicted engagement score is 117.15789954894541
+
+Explanation of components:
+app.py
+The app.py file defines and runs your Flask web application. It loads the trained model and sets up an API endpoint (e.g., /predict) that takes user input, makes a prediction, and returns the result as a JSON response. This allows the model to be accessed and used through a web interface.
+
+requirements.txt
+Lists all the Python packages and their versions that your project depends on (e.g., Flask, pandas, statsmodels). It allows anyone to recreate the exact same Python environment by running pip install -r requirements.txt. This ensures consistency and avoids issues caused by missing or incompatible libraries.
+
+Dockerfile
+The Dockerfile is a script that defines how to build a Docker image for your application. It specifies the base environment (like Python), installs required dependencies (e.g., via requirements.txt), and sets up how the app is run. This makes it easy to deploy your app in a consistent, portable container across different systems.
+
+How containerization improves reproducibility?
+Containerization improves reproducibility by packaging the application along with its entire environment—code, libraries, dependencies, and system settings—into a single, isolated unit. This ensures that the application behaves the same way regardless of where it's run, eliminating issues caused by differences in operating systems or environments. As a result, development, testing, and deployment become more reliable and consistent.
