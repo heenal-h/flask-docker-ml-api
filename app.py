@@ -3,25 +3,25 @@
 from flask import Flask, request, jsonify
 from sklearn.linear_model import LinearRegression
 import numpy as np
-import pandas as pd
-import statsmodels.api as sm    
-from statsmodels.formula.api import ols
+#import pandas as pd
+#import statsmodels.api as sm    
+#from statsmodels.formula.api import ols
 
 app = Flask(__name__)
 
-# Training data
-df = pd.read_excel("engagement_scores.xlsx")
-# X = np.array([[0], [1], [2], [3], [4]])
-# y = np.array([0, 2, 4, 6, 8])
-# model = LinearRegression().fit(X, y)
-Y = df['Engagement Score (Y^obs)']
-X = df['Sustainability Spending (X)']
-W = df['Treatment (W)']
+# # Training data
+# df = pd.read_excel("engagement_scores.xlsx")
+# # X = np.array([[0], [1], [2], [3], [4]])
+# # y = np.array([0, 2, 4, 6, 8])
+# # model = LinearRegression().fit(X, y)
+# Y = df['Engagement Score (Y^obs)']
+# X = df['Sustainability Spending (X)']
+# W = df['Treatment (W)']
 
-# Create design matrix
-X_design = sm.add_constant(pd.DataFrame({'W': W, 'X': X})) 
+# # Create design matrix
+# X_design = sm.add_constant(pd.DataFrame({'W': W, 'X': X})) 
 
-model = sm.OLS(Y, X_design).fit()
+# model = sm.OLS(Y, X_design).fit()
 
 @app.route("/predict")
 def predict():
@@ -31,10 +31,12 @@ def predict():
     x = float(request.args.get("x", 0))  # Sustainability spending
 
     # Prepare input for prediction (must match training design matrix)
-    input_data = pd.DataFrame({'const': [1], 'W': [w], 'X': [x]})
+    #input_data = pd.DataFrame({'const': [1], 'W': [w], 'X': [x]})
 
     # Make prediction
-    y_pred = model.predict(input_data)[0]
+    #y_pred = model.predict(input_data)[0]
+
+    y_pred = 95.96616888130347 + (1.51487260758259*x) + (-9.105721484009862*w)
     
     # Log prediction
     with open("output.txt", "w") as f:
