@@ -3,13 +3,25 @@
 from flask import Flask, request, jsonify
 from sklearn.linear_model import LinearRegression
 import numpy as np
+import pandas as pd
+import statsmodels.api as sm    
+from statsmodels.formula.api import ols
 
 app = Flask(__name__)
 
 # Training data
-X = np.array([[0], [1], [2], [3], [4]])
-y = np.array([0, 2, 4, 6, 8])
-model = LinearRegression().fit(X, y)
+df = pd.read_excel("engagement_scores.xlsx")
+# X = np.array([[0], [1], [2], [3], [4]])
+# y = np.array([0, 2, 4, 6, 8])
+# model = LinearRegression().fit(X, y)
+Y = df['Engagement Score (Y^obs)']
+X = df['Sustainability Spending (X)']
+W = df['Treatment (W)']
+
+# Create design matrix
+X_design = sm.add_constant(pd.DataFrame({'W': W, 'X': X})) 
+
+model = sm.OLS(Y, X_design).fit()
 
 @app.route("/predict")
 def predict():
